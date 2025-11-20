@@ -1,0 +1,108 @@
+/* ============================================================================
+   PRODUCTS PAGE STYLES
+   ============================================================================ */
+
+.products-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.products-main {
+  flex: 1;
+  width: 100%;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  background-color: var(--bg-secondary);
+}
+
+.products-content {
+  width: 100%;
+  max-width: var(--max-width-xl);
+  margin: 0 auto;
+}
+
+/* ----------------------------------------------------------------------------
+   Page Header
+   ---------------------------------------------------------------------------- */
+
+.products-header {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.products-title {
+  font-size: var(--font-4xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.products-subtitle {
+  font-size: var(--font-lg);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Products Grid
+   ---------------------------------------------------------------------------- */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+/* ----------------------------------------------------------------------------
+   Loading State
+   ---------------------------------------------------------------------------- */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xl);
+  gap: var(--spacing-lg);
+}
+
+.loading-container p {
+  font-size: var(--font-lg);
+  color: var(--text-secondary);
+}
+
+/* ----------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------------------------------------------------- */
+
+/* Tablet - 2 columns */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile - 1 column */
+@media (max-width: 768px) {
+  .products-main {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .products-header {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .products-title {
+    font-size: var(--font-3xl);
+  }
+
+  .products-subtitle {
+    font-size: var(--font-base);
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}

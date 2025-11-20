@@ -1,0 +1,121 @@
+/* ============================================================================
+   PRODUCTS PREVIEW SECTION STYLES - Full Width Design
+   ============================================================================ */
+
+.products-preview-section {
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  background-color: var(--bg-primary);
+  width: 100%;
+}
+
+.products-content {
+  width: 100%;
+  max-width: var(--max-width-xl);
+  margin: 0 auto;
+}
+
+/* ----------------------------------------------------------------------------
+   Section Header
+   ---------------------------------------------------------------------------- */
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.section-title {
+  font-size: var(--font-4xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.section-description {
+  font-size: var(--font-lg);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Products Grid
+   ---------------------------------------------------------------------------- */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+/* ----------------------------------------------------------------------------
+   Product Placeholder Cards
+   ---------------------------------------------------------------------------- */
+
+.product-placeholder {
+  background-color: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.product-placeholder:hover {
+  border-color: var(--primary-blue);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+.placeholder-content {
+  text-align: center;
+  color: var(--text-light);
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.placeholder-content p {
+  font-size: var(--font-base);
+  font-weight: var(--font-medium);
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------------------------------------------------- */
+
+/* Tablet (2 columns) */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (1 column) */
+@media (max-width: 768px) {
+  .products-preview-section {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .section-header {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .section-title {
+    font-size: var(--font-3xl);
+  }
+
+  .section-description {
+    font-size: var(--font-base);
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}

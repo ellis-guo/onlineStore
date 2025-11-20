@@ -1,0 +1,203 @@
+/* ============================================================================
+   LOGIN PAGE STYLES - Simple & Clean Design
+   ============================================================================ */
+
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  padding: var(--spacing-xl);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.login-box {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-3xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ----------------------------------------------------------------------------
+   Title
+   ---------------------------------------------------------------------------- */
+
+.login-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  color: var(--primary-blue);
+  margin-bottom: var(--spacing-2xl);
+  text-align: left;
+}
+
+/* ----------------------------------------------------------------------------
+   Error Alert
+   ---------------------------------------------------------------------------- */
+
+.error-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-sm);
+}
+
+/* ----------------------------------------------------------------------------
+   Form
+   ---------------------------------------------------------------------------- */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.form-label {
+  font-size: var(--font-base);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+.required {
+  color: var(--error);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(26, 58, 82, 0.1);
+}
+
+.form-input:disabled {
+  background-color: var(--bg-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ----------------------------------------------------------------------------
+   Submit Button
+   ---------------------------------------------------------------------------- */
+
+.login-button {
+  width: auto;
+  align-self: flex-start;
+  padding: var(--spacing-md) var(--spacing-3xl);
+  background: linear-gradient(135deg, #4db8a8 0%, #3da89a 100%);
+  color: var(--text-white);
+  font-size: var(--font-base);
+  font-weight: var(--font-semibold);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  margin-top: var(--spacing-md);
+}
+
+.login-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3da89a 0%, #2e8f82 100%);
+  box-shadow: 0 4px 12px rgba(77, 184, 168, 0.3);
+  transform: translateY(-1px);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------------------------
+   Footer Links
+   ---------------------------------------------------------------------------- */
+
+.login-footer {
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--border-color-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.footer-text {
+  font-size: var(--font-base);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.footer-link {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--primary-blue-dark);
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .login-page {
+    padding: var(--spacing-lg);
+  }
+
+  .login-box {
+    padding: var(--spacing-2xl);
+  }
+
+  .login-title {
+    font-size: var(--font-2xl);
+  }
+
+  .login-button {
+    width: 100%;
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: var(--spacing-md);
+  }
+
+  .login-box {
+    padding: var(--spacing-xl);
+  }
+
+  .form-input {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}

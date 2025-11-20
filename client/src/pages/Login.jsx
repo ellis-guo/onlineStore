@@ -1,99 +1,109 @@
-// Import React hooks and navigation
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "./Login.css";
 
 function Login() {
-  const navigate = useNavigate();
-  const { login } = useAuth();
-
-  // Form state
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get the redirect path from location state, default to home
   const from = location.state?.from?.pathname || "/";
 
-  // Handle input changes
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    // Basic validation
-    if (!formData.username || !formData.password) {
-      setError("Username and password are required");
-      setLoading(false);
-      return;
-    }
-
     try {
-      // Call login function from AuthContext
-      const result = await login(formData.username, formData.password);
+      const result = await login(username, password);
 
       if (result.success) {
-        // Login successful, redirect to products page
-        navigate("/products");
+        // Redirect to the page they tried to visit, or home
+        navigate(from, { replace: true });
       } else {
-        // Login failed, show error
-        setError(result.message || "Login failed");
+        setError(
+          result.message || "Login failed. Please check your credentials."
+        );
       }
     } catch (err) {
-      setError("An error occurred during login");
+      setError("An error occurred. Please try again.");
+      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-page">
+      <div className="login-container">
+        <div className="login-box">
+          <h1 className="login-title">LOGIN</h1>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <div className="error-alert">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
+          <form onSubmit={handleSubmit} className="login-form">
+            {/* Username/Email Field */}
+            <div className="form-group">
+              <label htmlFor="username" className="form-label">
+                Username or Email <span className="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="form-input"
+                disabled={loading}
+                autoComplete="username"
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                Password <span className="required">*</span>
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-input"
+                disabled={loading}
+                autoComplete="current-password"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? "LOGGING IN..." : "LOGIN"}
+            </button>
+          </form>
+
+          {/* Footer Links */}
+          <div className="login-footer">
+            <p className="footer-text">
+              Forgot your password? or{" "}
+              <Link to="/" className="footer-link">
+                Return to Store
+              </Link>
+            </p>
+            <p className="footer-text">
+              Don't have an account?{" "}
+              <Link to="/register" className="footer-link">
+                Sign Up
+              </Link>
+            </p>
+          </div>
         </div>
-
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-
-      <p>
-        Don't have an account? <Link to="/register">Register here</Link>
-      </p>
+      </div>
     </div>
   );
 }

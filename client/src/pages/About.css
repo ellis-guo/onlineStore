@@ -1,0 +1,309 @@
+/* ============================================================================
+   ABOUT PAGE STYLES
+   ============================================================================ */
+
+.about-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.about-main {
+  flex: 1;
+  width: 100%;
+}
+
+.about-content {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------------------
+   Hero Section
+   ---------------------------------------------------------------------------- */
+
+.about-hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--primary-blue-dark) 100%
+  );
+  color: var(--text-white);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  text-align: center;
+}
+
+.about-title {
+  font-size: var(--font-5xl);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-white);
+}
+
+.about-subtitle {
+  font-size: var(--font-xl);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ----------------------------------------------------------------------------
+   About Sections
+   ---------------------------------------------------------------------------- */
+
+.about-section {
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  width: 100%;
+}
+
+.about-section:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+.section-content {
+  max-width: var(--max-width-lg);
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+/* Story Text */
+.story-text {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.story-text p {
+  font-size: var(--font-lg);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ----------------------------------------------------------------------------
+   Mission Section
+   ---------------------------------------------------------------------------- */
+
+.mission-section {
+  background: linear-gradient(
+    135deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 100%
+  );
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-2xl);
+}
+
+.mission-card {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.mission-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+.mission-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.mission-card h3 {
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  color: var(--primary-blue);
+  margin-bottom: var(--spacing-sm);
+}
+
+.mission-card p {
+  font-size: var(--font-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Features List
+   ---------------------------------------------------------------------------- */
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  max-width: 800px;
+  margin: var(--spacing-2xl) auto 0;
+}
+
+.feature-item {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--primary-blue-light) 100%
+  );
+  color: var(--text-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-xl);
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+.feature-content h3 {
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.feature-content p {
+  font-size: var(--font-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   CTA Section
+   ---------------------------------------------------------------------------- */
+
+.cta-section {
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--primary-blue-dark) 100%
+  );
+  color: var(--text-white);
+  text-align: center;
+}
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-white);
+  margin-bottom: var(--spacing-md);
+}
+
+.cta-content p {
+  font-size: var(--font-lg);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+  min-width: 180px;
+}
+
+.cta-buttons .btn-outline {
+  border-color: var(--text-white);
+  color: var(--text-white);
+}
+
+.cta-buttons .btn-outline:hover {
+  background-color: var(--text-white);
+  color: var(--primary-blue);
+}
+
+/* ----------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .mission-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .about-title {
+    font-size: var(--font-3xl);
+  }
+
+  .about-subtitle {
+    font-size: var(--font-lg);
+  }
+
+  .about-section {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .section-title {
+    font-size: var(--font-2xl);
+  }
+
+  .story-text p {
+    font-size: var(--font-base);
+  }
+
+  .mission-card {
+    padding: var(--spacing-lg);
+  }
+
+  .feature-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .feature-icon {
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: var(--font-2xl);
+  }
+
+  .cta-content p {
+    font-size: var(--font-base);
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+  }
+}

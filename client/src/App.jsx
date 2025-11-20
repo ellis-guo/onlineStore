@@ -13,6 +13,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
+import About from "./pages/About";
+import ProductDetail from "./components/ProductDetail";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
 
           {/* Protected route - requires authentication */}
           <Route

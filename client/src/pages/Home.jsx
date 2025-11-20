@@ -1,12 +1,18 @@
-// Home page - landing page for the website
+import Navbar from "../components/Navbar";
+import HeroSection from "../components/HeroSection";
+import ProductsPreview from "../components/ProductsPreview";
+import Footer from "../components/Footer";
+import "./Home.css";
+
 function Home() {
   return (
-    <div>
-      <h1>Welcome to Deck Tiles Store</h1>
-      <p>Your one-stop shop for interlocking deck tiles</p>
-      <div>
-        <a href="/register">Register</a> | <a href="/login">Login</a>
-      </div>
+    <div className="home-page">
+      <Navbar />
+      <main className="home-main">
+        <HeroSection />
+        <ProductsPreview />
+      </main>
+      <Footer />
     </div>
   );
 }
