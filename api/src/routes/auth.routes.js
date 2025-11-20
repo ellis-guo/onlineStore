@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { PrismaClient } = require("@prisma/client");
 const { generateToken } = require("../utils/jwt");
+const { requireAuth } = require("../middleware/auth");
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -101,3 +102,31 @@ router.post("/logout", (req, res) => {
 });
 
 module.exports = router;
+
+// Get current user info (requires authentication)
+router.get("/me", requireAuth, async (req, res) => {
+  try {
+    // req.user is set by requireAuth middleware
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        fullName: true,
+        phone: true,
+        isAdmin: true,
+        createdAt: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error("Get user error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});

@@ -1,5 +1,11 @@
-// Import routing tools from react-router-dom
+// Import routing tools
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Import AuthProvider
+import { AuthProvider } from "./context/AuthContext";
+
+// Import RequireAuth component
+import RequireAuth from "./components/RequireAuth";
 
 // Import all page components
 import Home from "./pages/Home";
@@ -10,24 +16,27 @@ import Cart from "./pages/Cart";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Home page - accessible at / */}
-        <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes - anyone can access */}
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/products" element={<Products />} />
 
-        {/* Register page - accessible at /register */}
-        <Route path="/register" element={<Register />} />
-
-        {/* Login page - accessible at /login */}
-        <Route path="/login" element={<Login />} />
-
-        {/* Products page - accessible at /products */}
-        <Route path="/products" element={<Products />} />
-
-        {/* Cart page - accessible at /cart */}
-        <Route path="/cart" element={<Cart />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Protected route - requires authentication */}
+          <Route
+            path="/cart"
+            element={
+              <RequireAuth>
+                <Cart />
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
