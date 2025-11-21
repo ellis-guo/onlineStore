@@ -15,8 +15,8 @@
 }
 
 .navbar-container {
-  width: 100%;
-  margin: 0;
+  max-width: var(--max-width-xl);
+  margin: 0 auto;
   padding: 0 var(--spacing-xl);
   display: flex;
   justify-content: space-between;
@@ -155,47 +155,8 @@
   stroke-width: 2.5;
 }
 
-/* Cart badge */
-.cart-btn {
-  position: relative;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: linear-gradient(
-    135deg,
-    var(--accent-orange) 0%,
-    var(--accent-orange-dark) 100%
-  );
-  color: var(--text-white);
-  font-size: 0.7rem;
-  font-weight: var(--font-bold);
-  min-width: 20px;
-  height: 20px;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 5px;
-  border: 2px solid var(--primary-blue);
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
-  animation: badgePulse 2s ease-in-out infinite;
-}
-
-@keyframes badgePulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
 /* ----------------------------------------------------------------------------
-   Mobile Menu Toggle Button (Hamburger) - FIXED ALIGNMENT
+   Mobile Menu Toggle Button (Hamburger)
    ---------------------------------------------------------------------------- */
 
 .menu-toggle {
@@ -256,7 +217,6 @@
   top: 8px;
 }
 
-/* Hamburger animation when open */
 .hamburger.open {
   background-color: transparent;
 }
@@ -301,18 +261,15 @@
     font-size: 1.5rem;
   }
 
-  /* Hide desktop navigation on tablet/mobile */
   .desktop-nav,
   .desktop-actions {
     display: none;
   }
 
-  /* Show mobile menu toggle */
   .menu-toggle {
     display: flex;
   }
 
-  /* Mobile overlay */
   .mobile-overlay {
     display: block;
     position: fixed;
@@ -335,7 +292,6 @@
     }
   }
 
-  /* Mobile menu panel */
   .mobile-menu {
     display: block;
     position: fixed;
@@ -359,7 +315,6 @@
     right: 0;
   }
 
-  /* Mobile navigation list */
   .mobile-nav {
     list-style: none;
     margin: 0;
@@ -410,28 +365,8 @@
     background-color: rgba(255, 255, 255, 0.15);
     margin: var(--spacing-lg) var(--spacing-xl);
   }
-
-  .mobile-cart-badge {
-    margin-left: auto;
-    background: linear-gradient(
-      135deg,
-      var(--accent-orange) 0%,
-      var(--accent-orange-dark) 100%
-    );
-    color: var(--text-white);
-    font-size: 0.75rem;
-    font-weight: var(--font-bold);
-    min-width: 24px;
-    height: 24px;
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 8px;
-  }
 }
 
-/* Extra small mobile devices */
 @media (max-width: 480px) {
   .navbar-container {
     padding: 0 var(--spacing-md);
@@ -466,7 +401,6 @@
   outline-offset: 2px;
 }
 
-/* Prevent body scroll when mobile menu is open */
 body:has(.mobile-menu.active) {
   overflow: hidden;
 }

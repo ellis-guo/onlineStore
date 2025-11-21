@@ -23,7 +23,11 @@ function Navbar() {
   };
 
   const handleSignInClick = () => {
-    window.open("/login", "_blank");
+    if (!isAuthenticated) {
+      window.open("/login", "_blank");
+    } else {
+      navigate("/profile");
+    }
   };
 
   const closeMenu = () => {

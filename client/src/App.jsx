@@ -15,6 +15,7 @@ import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import About from "./pages/About";
 import ProductDetail from "./components/ProductDetail";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -35,6 +36,14 @@ function App() {
             element={
               <RequireAuth>
                 <Cart />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <Profile />
               </RequireAuth>
             }
           />

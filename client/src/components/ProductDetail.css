@@ -294,14 +294,15 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-xs);
+  border: none;
+  background: none;
+  padding: 0;
+  min-width: auto;
 }
 
 .quantity-selector label {
-  font-size: var(--font-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--font-l);
+  font-weight: var(--font-bold);
   color: var(--text-primary);
   padding: 0 var(--spacing-sm);
 }
@@ -327,12 +328,24 @@
 }
 
 .qty-input {
-  width: 50px;
+  width: auto;
+  min-width: 40px;
+  max-width: 80px;
   text-align: center;
   border: none;
-  font-size: var(--font-base);
-  font-weight: var(--font-medium);
-  background: transparent;
+  background: none;
+  font-size: var(--font-xl);
+  font-weight: var(--font);
+  color: var(--text-primary);
+  -moz-appearance: textfield;
+  appearance: none;
+  padding: 0;
+}
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .qty-input:focus {
