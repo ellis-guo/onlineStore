@@ -17,11 +17,21 @@ class ProductService {
     return products;
   }
 
-  // Get single product by ID
+  // Get single product by ID with all variants
   async getProductById(productId) {
     const product = await prisma.product.findUnique({
       where: {
         id: parseInt(productId),
+      },
+      include: {
+        variants: {
+          where: {
+            is_active: true, // Only return active variants
+          },
+          orderBy: {
+            price: "asc", // Sort by price, cheapest first
+          },
+        },
       },
     });
 
