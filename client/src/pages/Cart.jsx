@@ -1,72 +1,98 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getCart, updateCartItem, removeFromCart } from "../api/cart.api";
+import { useAuth } from "../context/AuthContext";
 import "./Cart.css";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
+  // Fetch cart items on component mount
   useEffect(() => {
-    // TODO: Replace with actual API call
-    // GET /api/cart
-    const mockCartItems = [
-      {
-        id: 1,
-        productId: 1,
-        name: "Ergo2 Pro Series Standing Desk",
-        price: 329.99,
-        quantity: 1,
-        imageUrl: "/products/desk-1.jpg",
-        color: "Black/Black",
-      },
-      {
-        id: 2,
-        productId: 2,
-        name: "Premium Interlocking Deck Tile - Walnut",
-        price: 89.99,
-        quantity: 2,
-        imageUrl: "/products/tile-walnut.jpg",
-        color: "Natural Walnut",
-      },
-    ];
+    const fetchCart = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-    setTimeout(() => {
-      setCartItems(mockCartItems);
-      setLoading(false);
-    }, 500);
-  }, []);
+        const data = await getCart();
+        setCartItems(data.cartItems || []);
+      } catch (err) {
+        console.error("Failed to fetch cart:", err);
 
-  const updateQuantity = (id, delta) => {
-    // TODO: Call API to update quantity
-    // PUT /api/cart/:id
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
+        // If 401 (unauthorized), redirect to login
+        if (err.response?.status === 401) {
+          navigate("/login", { state: { from: { pathname: "/cart" } } });
+          return;
+        }
+
+        setError("Failed to load cart. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCart();
+  }, [navigate]);
+
+  // Update item quantity
+  const handleUpdateQuantity = async (cartItemId, newQuantity) => {
+    // Optimistic update - update UI immediately
+    const previousItems = [...cartItems];
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === cartItemId ? { ...item, quantity: newQuantity } : item
       )
     );
-  };
 
-  const removeItem = (id) => {
-    // TODO: Call API to delete item
-    // DELETE /api/cart/:id
-    if (confirm("Remove this item from cart?")) {
-      setCartItems((items) => items.filter((item) => item.id !== id));
+    try {
+      await updateCartItem(cartItemId, newQuantity);
+    } catch (err) {
+      console.error("Failed to update quantity:", err);
+      // Revert on error
+      setCartItems(previousItems);
+      alert(err.response?.data?.error || "Failed to update quantity");
     }
   };
 
+  // Remove item from cart
+  const handleRemoveItem = async (cartItemId) => {
+    if (!confirm("Remove this item from cart?")) {
+      return;
+    }
+
+    // Optimistic update
+    const previousItems = [...cartItems];
+    setCartItems(cartItems.filter((item) => item.id !== cartItemId));
+
+    try {
+      await removeFromCart(cartItemId);
+    } catch (err) {
+      console.error("Failed to remove item:", err);
+      // Revert on error
+      setCartItems(previousItems);
+      alert(err.response?.data?.error || "Failed to remove item");
+    }
+  };
+
+  // Calculate cart totals
   const calculateSubtotal = () => {
-    return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return cartItems.reduce((sum, item) => {
+      const price = parseFloat(item.variant.price);
+      return sum + price * item.quantity;
+    }, 0);
   };
 
   const calculateTotal = () => {
-    // Can add tax, shipping, etc. here
-    return calculateSubtotal();
+    return calculateSubtotal(); // Can add tax, shipping later
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className="cart-page">
@@ -75,6 +101,30 @@ function Cart() {
           <div className="loading-container">
             <div className="loading"></div>
             <p>Loading cart...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="cart-page">
+        <Navbar />
+        <main className="cart-main">
+          <div className="cart-container">
+            <h1 className="cart-title">Shopping Cart</h1>
+            <div className="empty-cart">
+              <p style={{ color: "var(--error)" }}>{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="btn btn-primary"
+              >
+                Retry
+              </button>
+            </div>
           </div>
         </main>
         <Footer />
@@ -104,63 +154,89 @@ function Cart() {
             <div className="cart-content">
               {/* Cart Items List */}
               <div className="cart-items">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="cart-item">
-                    {/* Product Image */}
-                    <Link
-                      to={`/products/${item.productId}`}
-                      className="item-image"
-                    >
-                      <img src={item.imageUrl} alt={item.name} />
-                    </Link>
+                {cartItems.map((item) => {
+                  const maxStock = item.variant.stock_quantity;
 
-                    {/* Product Info */}
-                    <div className="item-info">
+                  return (
+                    <div key={item.id} className="cart-item">
+                      {/* Product Image */}
                       <Link
-                        to={`/products/${item.productId}`}
-                        className="item-name"
+                        to={`/products/${item.variant.product.id}`}
+                        className="item-image"
                       >
-                        {item.name}
+                        <img
+                          src={
+                            item.variant.image_url || "/placeholder-product.jpg"
+                          }
+                          alt={item.variant.product.name}
+                        />
                       </Link>
-                      {item.color && (
-                        <p className="item-color">Color: {item.color}</p>
-                      )}
-                      <p className="item-price">${item.price.toFixed(2)}</p>
-                    </div>
 
-                    {/* Quantity Controls */}
-                    <div className="item-quantity">
+                      {/* Product Info */}
+                      <div className="item-info">
+                        <Link
+                          to={`/products/${item.variant.product.id}`}
+                          className="item-name"
+                        >
+                          {item.variant.product.name}
+                        </Link>
+                        {item.variant.color && (
+                          <p className="item-color">
+                            Color: {item.variant.color}
+                            {item.variant.material &&
+                              ` • ${item.variant.material}`}
+                          </p>
+                        )}
+                        <p className="item-price">
+                          ${parseFloat(item.variant.price).toFixed(2)}
+                        </p>
+                        {item.variant.sku && (
+                          <p className="item-sku">SKU: {item.variant.sku}</p>
+                        )}
+                      </div>
+
+                      {/* Quantity Controls */}
+                      <div className="item-quantity">
+                        <button
+                          className="qty-btn"
+                          onClick={() =>
+                            handleUpdateQuantity(item.id, item.quantity - 1)
+                          }
+                          disabled={item.quantity <= 1}
+                        >
+                          −
+                        </button>
+                        <span className="qty-display">{item.quantity}</span>
+                        <button
+                          className="qty-btn"
+                          onClick={() =>
+                            handleUpdateQuantity(item.id, item.quantity + 1)
+                          }
+                          disabled={item.quantity >= maxStock}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Item Subtotal */}
+                      <div className="item-subtotal">
+                        $
+                        {(
+                          parseFloat(item.variant.price) * item.quantity
+                        ).toFixed(2)}
+                      </div>
+
+                      {/* Remove Button */}
                       <button
-                        className="qty-btn"
-                        onClick={() => updateQuantity(item.id, -1)}
-                        disabled={item.quantity <= 1}
+                        className="remove-btn"
+                        onClick={() => handleRemoveItem(item.id)}
+                        aria-label="Remove item"
                       >
-                        −
-                      </button>
-                      <span className="qty-display">{item.quantity}</span>
-                      <button
-                        className="qty-btn"
-                        onClick={() => updateQuantity(item.id, 1)}
-                      >
-                        +
+                        ✕
                       </button>
                     </div>
-
-                    {/* Item Subtotal */}
-                    <div className="item-subtotal">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </div>
-
-                    {/* Remove Button */}
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeItem(item.id)}
-                      aria-label="Remove item"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Cart Summary */}

@@ -2,57 +2,22 @@ import { Link } from "react-router-dom";
 import "./ProductCard.css";
 
 function ProductCard({ product }) {
-  // Calculate discount percentage if there's an original price
-  const hasDiscount =
-    product.originalPrice && product.originalPrice > product.price;
-  const discountPercent = hasDiscount
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
-      )
-    : 0;
-
-  // Render star rating
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-
-    for (let i = 0; i < 5; i++) {
-      if (i < fullStars) {
-        stars.push(
-          <span key={i} className="star filled">
-            ★
-          </span>
-        );
-      } else if (i === fullStars && hasHalfStar) {
-        stars.push(
-          <span key={i} className="star half">
-            ★
-          </span>
-        );
-      } else {
-        stars.push(
-          <span key={i} className="star empty">
-            ☆
-          </span>
-        );
-      }
-    }
-    return stars;
-  };
+  // Parse features from JSON if it exists
+  const features = product.features
+    ? typeof product.features === "string"
+      ? JSON.parse(product.features)
+      : product.features
+    : [];
 
   return (
     <div className="product-card">
-      {/* Product Image */}
+      {/* Product Image - using placeholder for now */}
       <div className="product-image-wrapper">
         <img
-          src={product.imageUrl || "/placeholder-product.jpg"}
+          src={product.image_url || "/placeholder-product.jpg"}
           alt={product.name}
           className="product-image"
         />
-        {hasDiscount && (
-          <div className="discount-badge">-{discountPercent}%</div>
-        )}
       </div>
 
       {/* Product Info */}
@@ -61,24 +26,18 @@ function ProductCard({ product }) {
 
         {/* Price */}
         <div className="product-pricing">
-          <span className="product-price">${product.price}</span>
-          {hasDiscount && (
-            <span className="product-original-price">
-              ${product.originalPrice}
-            </span>
-          )}
+          <span className="product-price">
+            ${parseFloat(product.base_price).toFixed(2)}
+          </span>
         </div>
 
-        {/* Rating */}
-        {product.rating && (
-          <div className="product-rating">
-            <div className="stars">{renderStars(product.rating)}</div>
-            {product.reviewCount && (
-              <span className="review-count">
-                {product.reviewCount} Reviews
-              </span>
-            )}
-          </div>
+        {/* Category/Brand */}
+        {(product.category || product.brand) && (
+          <p className="product-category">
+            {product.brand && `${product.brand}`}
+            {product.brand && product.category && " • "}
+            {product.category && product.category}
+          </p>
         )}
 
         {/* Shop Button */}
@@ -88,9 +47,9 @@ function ProductCard({ product }) {
       </div>
 
       {/* Product Features */}
-      {product.features && product.features.length > 0 && (
+      {features.length > 0 && (
         <div className="product-features">
-          {product.features.map((feature, index) => (
+          {features.slice(0, 4).map((feature, index) => (
             <div key={index} className="feature-item">
               <span className="feature-icon">{feature.icon}</span>
               <span className="feature-text">{feature.text}</span>

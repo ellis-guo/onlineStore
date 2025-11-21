@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { getProductById } from "../api/products.api";
+import { addToCart } from "../api/cart.api";
+import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./ProductDetail.css";
@@ -7,64 +10,109 @@ import "./ProductDetail.css";
 function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { isAuthenticated } = useAuth();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [error, setError] = useState(null);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [addingToCart, setAddingToCart] = useState(false);
 
   useEffect(() => {
-    // TODO: Replace with actual API call
-    // Simulating API call with mock data
-    const mockProduct = {
-      id: parseInt(id),
-      name: "Ergo2 Pro Series Standing Desk",
-      price: 230.99,
-      originalPrice: 329.99,
-      rating: 5.0,
-      reviewCount: 152,
-      images: [
-        "/products/desk-1.jpg",
-        "/products/desk-2.jpg",
-        "/products/desk-3.jpg",
-        "/products/desk-4.jpg",
-      ],
-      colors: [
-        { name: "Black/Black", value: "#000000" },
-        { name: "White/Silver", value: "#FFFFFF" },
-      ],
-      description: `Enhance Comfort and Productivity with MotionGrey's Ergonomic Standing Desks`,
-      details: `The MotionGrey Standing Desk Pro is powered by dual motors for smooth and reliable height adjustment. Its heavy-duty frame supports multiple monitors, equipment, and larger setups with ease. Built for both home and commercial spaces, it combines strength, stability, and ergonomic comfort.`,
-      features: [
-        "Powerful Dual Motor System",
-        "3 Years Warranty",
-        'Two-Segment frame height ranges from 28" to 46"',
-        "2 Preset Memory Keypad",
-      ],
-      inStock: true,
-      shippingInfo: "Ships for free in 3-7 business days | 30-day returns",
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const data = await getProductById(id);
+        setProduct(data);
+
+        // If no variants, show error
+        if (!data.variants || data.variants.length === 0) {
+          setError("This product has no available options");
+        }
+      } catch (err) {
+        console.error("Failed to fetch product:", err);
+        setError(err.message || "Failed to load product");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    setTimeout(() => {
-      setProduct(mockProduct);
-      setLoading(false);
-    }, 300);
+    fetchProduct();
   }, [id]);
 
   const handleQuantityChange = (delta) => {
     const newQuantity = quantity + delta;
-    if (newQuantity >= 1 && newQuantity <= 99) {
+    const maxStock =
+      product?.variants[selectedVariantIndex]?.stock_quantity || 0;
+
+    if (newQuantity >= 1 && newQuantity <= maxStock) {
       setQuantity(newQuantity);
     }
   };
 
-  const handleAddToCart = () => {
-    // TODO: Implement add to cart functionality
-    console.log("Add to cart:", { product, quantity, color: selectedColor });
-    alert("Added to cart! (Feature coming soon)");
+  const handleAddToCart = async () => {
+    // Check if user is logged in
+    if (!isAuthenticated) {
+      // Redirect to login, save current location
+      navigate("/login", {
+        state: { from: location },
+        replace: false,
+      });
+      return;
+    }
+
+    const selectedVariant = product.variants[selectedVariantIndex];
+
+    // Prevent double-clicking
+    if (addingToCart) {
+      return;
+    }
+
+    try {
+      setAddingToCart(true);
+
+      // Call API to add to cart
+      await addToCart(selectedVariant.id, quantity);
+
+      // Show success message with link to cart
+      const viewCart = window.confirm(
+        `✓ Added ${quantity} item(s) to cart!\n\nClick OK to view cart, or Cancel to continue shopping.`
+      );
+
+      if (viewCart) {
+        navigate("/cart");
+      } else {
+        // Reset quantity after adding
+        setQuantity(1);
+      }
+    } catch (err) {
+      console.error("Failed to add to cart:", err);
+
+      // Handle specific errors
+      if (err.response?.status === 401) {
+        // Token expired, redirect to login
+        navigate("/login", {
+          state: { from: location },
+          replace: false,
+        });
+        return;
+      }
+
+      // Show error message
+      const errorMsg =
+        err.response?.data?.error || "Failed to add to cart. Please try again.";
+      alert(`❌ ${errorMsg}`);
+    } finally {
+      setAddingToCart(false);
+    }
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className="product-detail-page">
@@ -80,13 +128,15 @@ function ProductDetail() {
     );
   }
 
-  if (!product) {
+  // Error state
+  if (error || !product) {
     return (
       <div className="product-detail-page">
         <Navbar />
         <main className="detail-main">
           <div className="error-container">
             <h2>Product Not Found</h2>
+            <p>{error || "The product you're looking for doesn't exist."}</p>
             <button
               onClick={() => navigate("/products")}
               className="btn btn-primary"
@@ -100,9 +150,34 @@ function ProductDetail() {
     );
   }
 
-  const discount = Math.round(
-    ((product.originalPrice - product.price) / product.originalPrice) * 100
-  );
+  // Get selected variant
+  const selectedVariant = product.variants[selectedVariantIndex];
+
+  // Calculate discount percentage
+  const hasDiscount =
+    selectedVariant.discount && parseFloat(selectedVariant.discount) > 0;
+  const discountPercent = hasDiscount
+    ? Math.round(
+        (parseFloat(selectedVariant.discount) /
+          parseFloat(selectedVariant.price)) *
+          100
+      )
+    : 0;
+
+  // Parse features
+  const features = product.features
+    ? typeof product.features === "string"
+      ? JSON.parse(product.features)
+      : product.features
+    : [];
+
+  // Generate images array (using selected variant's image or placeholder)
+  const images = [
+    selectedVariant.image_url || "/placeholder-product.jpg",
+    "/placeholder-product.jpg", // Additional placeholder images
+    "/placeholder-product.jpg",
+    "/placeholder-product.jpg",
+  ];
 
   return (
     <div className="product-detail-page">
@@ -114,13 +189,13 @@ function ProductDetail() {
             <div className="detail-images">
               {/* Thumbnail Column */}
               <div className="thumbnail-column">
-                {product.images.map((img, index) => (
+                {images.map((img, index) => (
                   <div
                     key={index}
                     className={`thumbnail ${
-                      selectedImage === index ? "active" : ""
+                      selectedImageIndex === index ? "active" : ""
                     }`}
-                    onClick={() => setSelectedImage(index)}
+                    onClick={() => setSelectedImageIndex(index)}
                   >
                     <img src={img} alt={`${product.name} view ${index + 1}`} />
                   </div>
@@ -129,10 +204,8 @@ function ProductDetail() {
 
               {/* Main Image */}
               <div className="main-image">
-                {product.originalPrice > product.price && (
-                  <div className="sale-badge">SALE</div>
-                )}
-                <img src={product.images[selectedImage]} alt={product.name} />
+                {hasDiscount && <div className="sale-badge">SALE</div>}
+                <img src={images[selectedImageIndex]} alt={product.name} />
               </div>
             </div>
 
@@ -140,72 +213,95 @@ function ProductDetail() {
             <div className="detail-info">
               <h1 className="product-title">{product.name}</h1>
 
-              {/* Rating */}
-              <div className="product-rating">
-                <div className="stars">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="star filled">
-                      ★
-                    </span>
-                  ))}
-                  <span className="rating-number">{product.rating}</span>
+              {/* Brand & Category */}
+              {(product.brand || product.category) && (
+                <div className="product-meta">
+                  {product.brand && (
+                    <span className="brand">{product.brand}</span>
+                  )}
+                  {product.brand && product.category && <span> • </span>}
+                  {product.category && (
+                    <span className="category">{product.category}</span>
+                  )}
                 </div>
-                <span className="review-count">
-                  ({product.reviewCount} Reviews)
-                </span>
-                <span className="shipping-badge">+ FREE SHIPPING</span>
-              </div>
+              )}
 
               {/* Price */}
               <div className="product-pricing">
                 <span className="current-price">
-                  ${product.price.toFixed(2)} CAD
+                  ${parseFloat(selectedVariant.price).toFixed(2)} CAD
                 </span>
-                {product.originalPrice && (
-                  <>
-                    <span className="original-price">
-                      ${product.originalPrice.toFixed(2)} CAD
-                    </span>
-                    <span className="discount-badge">-{discount}%</span>
-                  </>
+                {hasDiscount && (
+                  <span className="discount-badge">-{discountPercent}%</span>
                 )}
-              </div>
-
-              <div className="coupon-info">
-                <span className="coupon-tag">Coupon</span>
-                <span className="code-applied">✓ Code applied!</span>
               </div>
 
               {/* Description */}
               <div className="product-description">
-                <h2>{product.description}</h2>
-                <p>{product.details}</p>
+                <h2>Description</h2>
+                <p>{product.description}</p>
               </div>
 
-              {/* Color Selection */}
-              {product.colors && product.colors.length > 0 && (
-                <div className="color-selection">
+              {/* Details */}
+              {product.details && (
+                <div className="product-details">
+                  <h3>Details</h3>
+                  <p style={{ whiteSpace: "pre-line" }}>{product.details}</p>
+                </div>
+              )}
+
+              {/* Variant Selection (Color/Material) */}
+              {product.variants.length > 1 && (
+                <div className="variant-selection">
                   <label className="selection-label">
-                    TABLETOP - FRAME COLOR:{" "}
-                    {product.colors[selectedColor].name.toUpperCase()}
+                    {selectedVariant.material && selectedVariant.color
+                      ? `${selectedVariant.material} - ${selectedVariant.color}`.toUpperCase()
+                      : selectedVariant.color
+                      ? `COLOR: ${selectedVariant.color}`.toUpperCase()
+                      : `OPTION ${selectedVariantIndex + 1}`}
                   </label>
-                  <div className="color-options">
-                    {product.colors.map((color, index) => (
+                  <div className="variant-options">
+                    {product.variants.map((variant, index) => (
                       <button
-                        key={index}
-                        className={`color-option ${
-                          selectedColor === index ? "active" : ""
+                        key={variant.id}
+                        className={`variant-option ${
+                          selectedVariantIndex === index ? "active" : ""
                         }`}
-                        onClick={() => setSelectedColor(index)}
-                        style={{ backgroundColor: color.value }}
-                        aria-label={color.name}
+                        onClick={() => {
+                          setSelectedVariantIndex(index);
+                          setQuantity(1); // Reset quantity when changing variant
+                        }}
+                        title={`${variant.material || ""} ${
+                          variant.color || ""
+                        }`.trim()}
                       >
-                        {selectedColor === index && (
+                        <span className="variant-label">
+                          {variant.color || `Option ${index + 1}`}
+                        </span>
+                        <span className="variant-price">
+                          ${parseFloat(variant.price).toFixed(2)}
+                        </span>
+                        {selectedVariantIndex === index && (
                           <span className="checkmark">✓</span>
                         )}
                       </button>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Features */}
+              {features.length > 0 && (
+                <div className="product-features-list">
+                  <h3>Features</h3>
+                  <ul>
+                    {features.map((feature, index) => (
+                      <li key={index}>
+                        <span className="feature-icon">{feature.icon}</span>
+                        <span>{feature.text}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 
@@ -216,36 +312,56 @@ function ProductDetail() {
                   <button
                     onClick={() => handleQuantityChange(-1)}
                     className="qty-btn"
+                    disabled={quantity <= 1}
                   >
                     −
                   </button>
                   <input
                     type="number"
                     value={quantity}
-                    onChange={(e) =>
-                      setQuantity(Math.max(1, parseInt(e.target.value) || 1))
-                    }
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value) || 1;
+                      const maxStock = selectedVariant.stock_quantity;
+                      setQuantity(Math.max(1, Math.min(val, maxStock)));
+                    }}
                     className="qty-input"
                     min="1"
-                    max="99"
+                    max={selectedVariant.stock_quantity}
                   />
                   <button
                     onClick={() => handleQuantityChange(1)}
                     className="qty-btn"
+                    disabled={quantity >= selectedVariant.stock_quantity}
                   >
                     +
                   </button>
                 </div>
 
-                <button className="add-to-cart-btn" onClick={handleAddToCart}>
-                  ADD TO CART
+                <button
+                  className="add-to-cart-btn"
+                  onClick={handleAddToCart}
+                  disabled={
+                    selectedVariant.stock_quantity === 0 || addingToCart
+                  }
+                >
+                  {addingToCart
+                    ? "ADDING..."
+                    : selectedVariant.stock_quantity === 0
+                    ? "OUT OF STOCK"
+                    : "ADD TO CART"}
                 </button>
               </div>
 
-              {/* Stock & Shipping Info */}
+              {/* Stock Info */}
               <div className="stock-info">
-                <span className="in-stock">● Available</span> |{" "}
-                {product.shippingInfo}
+                {selectedVariant.stock_quantity > 0 ? (
+                  <>
+                    <span className="in-stock">● Available</span>
+                    <span> ({selectedVariant.stock_quantity} in stock)</span>
+                  </>
+                ) : (
+                  <span style={{ color: "var(--error)" }}>Out of Stock</span>
+                )}
               </div>
             </div>
           </div>

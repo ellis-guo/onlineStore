@@ -1,17 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartItemCount] = useState(3); // Placeholder - will connect to cart state later
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleCartClick = () => {
+    if (!isAuthenticated) {
+      // Not logged in, redirect to login
+      navigate("/login", { state: { from: { pathname: "/cart" } } });
+    } else {
+      // Logged in, go to cart
+      navigate("/cart");
+    }
+  };
+
   const handleSignInClick = () => {
-    // Open login page in new window
     window.open("/login", "_blank");
   };
 
@@ -64,9 +75,10 @@ function Navbar() {
             </svg>
           </button>
 
-          {/* Cart Icon with Badge */}
+          {/* Cart Icon */}
           <button
             className="icon-btn cart-btn"
+            onClick={handleCartClick}
             aria-label="Shopping cart"
             title="Shopping cart"
           >
@@ -83,9 +95,6 @@ function Navbar() {
               <circle cx="20" cy="21" r="1" />
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
             </svg>
-            {cartItemCount > 0 && (
-              <span className="cart-badge">{cartItemCount}</span>
-            )}
           </button>
         </div>
 
@@ -143,7 +152,13 @@ function Navbar() {
             </button>
           </li>
           <li className="mobile-nav-item">
-            <button className="mobile-nav-link" onClick={closeMenu}>
+            <button
+              className="mobile-nav-link"
+              onClick={() => {
+                handleCartClick();
+                closeMenu();
+              }}
+            >
               <svg
                 className="mobile-icon"
                 viewBox="0 0 24 24"
@@ -156,9 +171,6 @@ function Navbar() {
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
               Cart
-              {cartItemCount > 0 && (
-                <span className="mobile-cart-badge">{cartItemCount}</span>
-              )}
             </button>
           </li>
         </ul>

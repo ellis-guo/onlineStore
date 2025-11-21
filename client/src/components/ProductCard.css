@@ -229,4 +229,10 @@
   .feature-text {
     font-size: var(--font-xs);
   }
+
+  .product-category {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    margin: var(--spacing-xs) 0;
+  }
 }
