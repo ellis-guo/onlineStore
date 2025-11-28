@@ -17,9 +17,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://online-store-ialvqa726-ellis-projects-79bb91b1.vercel.app",
-      "https://online-store-*.vercel.app",
-      "https://*.vercel.app",
+      "https://online-store-pink-chi.vercel.app",
     ],
     credentials: true,
   })
