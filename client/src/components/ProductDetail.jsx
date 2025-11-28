@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./ProductDetail.css";
+import ProductShowcase from "./ProductShowcase";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -172,12 +173,9 @@ function ProductDetail() {
     : [];
 
   // Generate images array (using selected variant's image or placeholder)
-  const images = [
-    selectedVariant.image_url || "/placeholder-product.jpg",
-    "/placeholder-product.jpg", // Additional placeholder images
-    "/placeholder-product.jpg",
-    "/placeholder-product.jpg",
-  ];
+  const images = product.variants.map(
+    (v) => v.image_url || "/placeholder-product.jpg"
+  );
 
   return (
     <div className="product-detail-page">
@@ -366,6 +364,7 @@ function ProductDetail() {
             </div>
           </div>
         </div>
+        <ProductShowcase />
       </main>
       <Footer />
     </div>

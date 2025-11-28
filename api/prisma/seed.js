@@ -109,7 +109,8 @@ Warranty: 2 years`,
         price: 29.9,
         discount: 5.0,
         stock_quantity: 500,
-        image_url: "/images/runnen-wood-grey.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
       },
       {
         product_id: product1.id,
@@ -119,7 +120,8 @@ Warranty: 2 years`,
         price: 29.9,
         discount: 0,
         stock_quantity: 300,
-        image_url: "/images/runnen-wood-brown.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
       },
       {
         product_id: product1.id,
@@ -129,7 +131,8 @@ Warranty: 2 years`,
         price: 32.9,
         discount: 3.0,
         stock_quantity: 200,
-        image_url: "/images/runnen-wood-white.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
       },
       {
         product_id: product1.id,
@@ -139,7 +142,8 @@ Warranty: 2 years`,
         price: 34.9,
         discount: 0,
         stock_quantity: 150,
-        image_url: "/images/runnen-wood-black.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
       },
     ],
   });
@@ -183,7 +187,8 @@ Warranty: 3 years`,
         price: 39.9,
         discount: 0,
         stock_quantity: 400,
-        image_url: "/images/mallsten-stone-dark.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=800",
       },
       {
         product_id: product2.id,
@@ -193,7 +198,8 @@ Warranty: 3 years`,
         price: 39.9,
         discount: 10.0,
         stock_quantity: 350,
-        image_url: "/images/mallsten-stone-light.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=800",
       },
       {
         product_id: product2.id,
@@ -203,7 +209,8 @@ Warranty: 3 years`,
         price: 42.9,
         discount: 5.0,
         stock_quantity: 250,
-        image_url: "/images/mallsten-stone-beige.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=800",
       },
       {
         product_id: product2.id,
@@ -213,7 +220,8 @@ Warranty: 3 years`,
         price: 44.9,
         discount: 0,
         stock_quantity: 180,
-        image_url: "/images/mallsten-stone-charcoal.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=800",
       },
     ],
   });
@@ -257,7 +265,8 @@ Warranty: 1 year`,
         price: 19.9,
         discount: 0,
         stock_quantity: 800,
-        image_url: "/images/basic-plastic-green.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800",
       },
       {
         product_id: product3.id,
@@ -267,7 +276,8 @@ Warranty: 1 year`,
         price: 19.9,
         discount: 2.0,
         stock_quantity: 600,
-        image_url: "/images/basic-plastic-terracotta.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800",
       },
       {
         product_id: product3.id,
@@ -277,7 +287,8 @@ Warranty: 1 year`,
         price: 21.9,
         discount: 0,
         stock_quantity: 450,
-        image_url: "/images/basic-plastic-blue.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800",
       },
     ],
   });
@@ -321,7 +332,8 @@ Warranty: 5 years`,
         price: 59.9,
         discount: 0,
         stock_quantity: 200,
-        image_url: "/images/premium-comp-walnut.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
       },
       {
         product_id: product4.id,
@@ -331,7 +343,8 @@ Warranty: 5 years`,
         price: 64.9,
         discount: 15.0,
         stock_quantity: 150,
-        image_url: "/images/premium-comp-teak.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
       },
       {
         product_id: product4.id,
@@ -341,7 +354,8 @@ Warranty: 5 years`,
         price: 64.9,
         discount: 0,
         stock_quantity: 120,
-        image_url: "/images/premium-comp-mahogany.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
       },
     ],
   });
@@ -385,7 +399,8 @@ Warranty: 3 years`,
         price: 44.9,
         discount: 0,
         stock_quantity: 300,
-        image_url: "/images/eco-bamboo-natural.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800",
       },
       {
         product_id: product5.id,
@@ -395,7 +410,8 @@ Warranty: 3 years`,
         price: 47.9,
         discount: 7.0,
         stock_quantity: 250,
-        image_url: "/images/eco-bamboo-carbonized.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800",
       },
       {
         product_id: product5.id,
@@ -405,7 +421,8 @@ Warranty: 3 years`,
         price: 46.9,
         discount: 0,
         stock_quantity: 280,
-        image_url: "/images/eco-bamboo-honey.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800",
       },
     ],
   });
@@ -449,7 +466,8 @@ Warranty: 3 years`,
         price: 34.9,
         discount: 0,
         stock_quantity: 400,
-        image_url: "/images/rubber-safety-red.jpg",
+        image_url:
+          "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
       },
       {
         product_id: product6.id,
@@ -459,7 +477,7 @@ Warranty: 3 years`,
         price: 34.9,
         discount: 4.0,
         stock_quantity: 380,
-        image_url: "/images/rubber-safety-blue.jpg",
+        image_url: "https://placehold.co/800x800/457b9d/ffffff",
       },
       {
         product_id: product6.id,
@@ -469,7 +487,7 @@ Warranty: 3 years`,
         price: 34.9,
         discount: 0,
         stock_quantity: 350,
-        image_url: "/images/rubber-safety-yellow.jpg",
+        image_url: "https://placehold.co/800x800/f1c40f/ffffff",
       },
       {
         product_id: product6.id,
@@ -479,7 +497,7 @@ Warranty: 3 years`,
         price: 32.9,
         discount: 0,
         stock_quantity: 500,
-        image_url: "/images/rubber-safety-black.jpg",
+        image_url: "https://placehold.co/800x800/2d3436/ffffff",
       },
     ],
   });
@@ -550,6 +568,7 @@ Warranty: 3 years`,
   console.log("5. ECO Bamboo Tiles (3 variants)");
   console.log("6. RUBBER Safety Tiles (4 variants)");
   console.log("\nTotal: 6 products with 21 variants");
+  console.log("\nAll product images updated with Unsplash URLs");
 }
 
 main()

@@ -1,6 +1,6 @@
 /* ============================================================================
    GLOBAL STYLES - Deck Tiles E-Commerce Platform
-   Design inspired by MotionGrey with Deep Blue theme
+   Design Theme: tentree-inspired Forest Green
    ============================================================================ */
 
 /* ----------------------------------------------------------------------------
@@ -30,31 +30,30 @@ body {
 }
 
 /* ----------------------------------------------------------------------------
-   2. CSS VARIABLES - Design System
+   2. CSS VARIABLES - Design System (tentree-inspired)
    ---------------------------------------------------------------------------- */
 
 :root {
-  /* Primary Colors - Deep Blue Theme */
-  --primary-blue: #1a3a52; /* Main brand color - deep blue */
-  --primary-blue-dark: #0f2535; /* Darker blue for hover states */
-  --primary-blue-light: #2d5573; /* Lighter blue for accents */
+  /* Primary Colors - Forest Green (from tentree) */
+  --primary-green: #475a4f; /* Navbar, buttons - from tentree */
+  --primary-green-dark: #3a4840; /* Footer - slightly darker */
+  --primary-green-light: #5a6e62; /* Hover states - slightly lighter */
 
-  /* Accent Colors */
-  --accent-orange: #ff6b35; /* Call-to-action buttons */
-  --accent-orange-dark: #e55a2b; /* Hover state for orange */
+  --accent-tan: #cebea8ff; /* Warm tan for secondary CTAs and highlights */
+  --accent-mint: #a8d5ba; /* Mint green for subtle accents */
 
   /* Neutral Colors */
-  --bg-primary: #ffffff; /* Main background */
-  --bg-secondary: #f8f9fa; /* Section backgrounds */
-  --bg-tertiary: #e9ecef; /* Cards, inputs */
+  --bg-primary: #ffffff; /* Pure white for main content areas */
+  --bg-secondary: #f7f7f7; /* Light gray for section backgrounds */
+  --bg-tertiary: #f5f3f0; /* Warm off-white for cards */
 
-  --text-primary: #2c2c2c; /* Main text color */
-  --text-secondary: #6c757d; /* Secondary text */
-  --text-light: #adb5bd; /* Muted text */
+  --text-primary: #1a1a1a; /* Almost black for primary text */
+  --text-secondary: #666666; /* Medium gray for secondary text */
+  --text-light: #999999; /* Light gray for muted text */
   --text-white: #ffffff; /* White text on dark backgrounds */
 
-  --border-color: #dee2e6; /* Borders, dividers */
-  --border-color-light: #e9ecef; /* Lighter borders */
+  --border-color: #e0e0e0; /* Standard borders */
+  --border-color-light: #ececec; /* Lighter borders for cards */
 
   /* Semantic Colors */
   --success: #28a745;
@@ -62,7 +61,7 @@ body {
   --warning: #ffc107;
   --info: #17a2b8;
 
-  /* Shadows */
+  /* Shadows - for depth and elevation */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
@@ -111,13 +110,6 @@ body {
   --max-width-lg: 1024px;
   --max-width-xl: 1280px;
   --max-width-2xl: 1536px;
-
-  /* Responsive Breakpoints (for reference in JS/comments) */
-  /* sm: 640px */
-  /* md: 768px */
-  /* lg: 1024px */
-  /* xl: 1280px */
-  /* 2xl: 1536px */
 }
 
 /* ----------------------------------------------------------------------------
@@ -174,13 +166,13 @@ p {
 }
 
 a {
-  color: var(--primary-blue);
+  color: var(--primary-green);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--primary-blue-dark);
+  color: var(--primary-green-dark);
 }
 
 strong {
@@ -188,7 +180,7 @@ strong {
 }
 
 /* ----------------------------------------------------------------------------
-   4. BUTTONS - MotionGrey Style
+   4. BUTTONS - tentree style
    ---------------------------------------------------------------------------- */
 
 .btn {
@@ -198,7 +190,7 @@ strong {
   font-weight: var(--font-medium);
   text-align: center;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-base);
   text-decoration: none;
@@ -210,26 +202,26 @@ strong {
   cursor: not-allowed;
 }
 
-/* Primary Button - Deep Blue */
+/* Primary Button - Forest Green */
 .btn-primary {
-  background-color: var(--primary-blue);
+  background-color: var(--primary-green-light);
   color: var(--text-white);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: var(--primary-blue-dark);
+  background-color: var(--primary-green);
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
-/* Secondary Button - Orange Accent */
+/* Secondary Button - Warm Tan */
 .btn-secondary {
-  background-color: var(--accent-orange);
+  background-color: var(--accent-tan);
   color: var(--text-white);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--accent-orange-dark);
+  background-color: #b8935c;
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
@@ -237,12 +229,12 @@ strong {
 /* Outline Button */
 .btn-outline {
   background-color: transparent;
-  color: var(--primary-blue);
-  border: 2px solid var(--primary-blue);
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
 }
 
 .btn-outline:hover:not(:disabled) {
-  background-color: var(--primary-blue);
+  background-color: var(--primary-green);
   color: var(--text-white);
 }
 
@@ -297,8 +289,8 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 0 3px rgba(26, 58, 82, 0.1);
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(23, 54, 48, 0.1);
 }
 
 textarea {
@@ -577,7 +569,7 @@ textarea {
   height: 20px;
   border: 3px solid var(--border-color);
   border-radius: 50%;
-  border-top-color: var(--primary-blue);
+  border-top-color: var(--primary-green);
   animation: spin 0.8s linear infinite;
 }
 
@@ -639,7 +631,7 @@ textarea {
 
 /* Focus visible for keyboard navigation */
 *:focus-visible {
-  outline: 2px solid var(--primary-blue);
+  outline: 2px solid var(--primary-green);
   outline-offset: 2px;
 }
 

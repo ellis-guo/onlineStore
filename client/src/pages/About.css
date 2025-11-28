@@ -25,8 +25,8 @@
 .about-hero {
   background: linear-gradient(
     135deg,
-    var(--primary-blue) 0%,
-    var(--primary-blue-dark) 100%
+    var(--primary-green) 0%,
+    var(--primary-green-dark) 100%
   );
   color: var(--text-white);
   padding: var(--spacing-3xl) var(--spacing-xl);
@@ -127,7 +127,7 @@
 .mission-card h3 {
   font-size: var(--font-xl);
   font-weight: var(--font-semibold);
-  color: var(--primary-blue);
+  color: var(--primary-green);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -161,8 +161,8 @@
   height: 40px;
   background: linear-gradient(
     135deg,
-    var(--primary-blue) 0%,
-    var(--primary-blue-light) 100%
+    var(--primary-green) 0%,
+    var(--primary-green-light) 100%
   );
   color: var(--text-white);
   border-radius: 50%;
@@ -195,8 +195,8 @@
 .cta-section {
   background: linear-gradient(
     135deg,
-    var(--primary-blue) 0%,
-    var(--primary-blue-dark) 100%
+    var(--primary-green) 0%,
+    var(--primary-green-dark) 100%
   );
   color: var(--text-white);
   text-align: center;
@@ -238,7 +238,7 @@
 
 .cta-buttons .btn-outline:hover {
   background-color: var(--text-white);
-  color: var(--primary-blue);
+  color: var(--primary-green);
 }
 
 /* ----------------------------------------------------------------------------

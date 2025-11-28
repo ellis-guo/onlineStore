@@ -62,7 +62,7 @@
 }
 
 .product-placeholder:hover {
-  border-color: var(--primary-blue);
+  border-color: var(--primary-green);
   box-shadow: var(--shadow-hover);
   transform: translateY(-4px);
 }

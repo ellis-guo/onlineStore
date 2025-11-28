@@ -13,7 +13,7 @@
   flex: 1;
   width: 100%;
   padding: var(--spacing-3xl) var(--spacing-xl);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-tertiary);
 }
 
 .products-content {

@@ -5,10 +5,8 @@ function ProductsPreview() {
     <section className="products-preview-section">
       <div className="products-content">
         <div className="section-header">
-          <h2 className="section-title">Featured Products</h2>
-          <p className="section-description">
-            Discover our premium interlocking deck tiles
-          </p>
+          <h2 className="section-title">Best Seller</h2>
+          <p className="section-description">Discover our premium products</p>
         </div>
 
         {/* Placeholder for product cards */}

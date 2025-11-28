@@ -1,0 +1,360 @@
+/* ============================================================================
+   PRODUCT SHOWCASE COMPONENT STYLES - Color Block Design
+   ============================================================================ */
+
+.product-showcase {
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-3xl);
+  border-top: 2px solid var(--border-color-light);
+}
+
+/* ----------------------------------------------------------------------------
+   Hero Color Block
+   ---------------------------------------------------------------------------- */
+
+.showcase-hero-block {
+  background: linear-gradient(
+    135deg,
+    var(--primary-green) 0%,
+    var(--primary-green-dark) 100%
+  );
+  padding: var(--spacing-3xl);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: var(--font-4xl);
+  font-weight: var(--font-bold);
+  color: var(--text-white);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+  font-size: var(--font-xl);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: var(--font-normal);
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Introduction Section
+   ---------------------------------------------------------------------------- */
+
+.showcase-intro {
+  max-width: 800px;
+  margin: 0 auto var(--spacing-3xl);
+}
+
+.intro-text {
+  font-size: var(--font-lg);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+  text-align: left;
+}
+
+.intro-highlight {
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--accent-tan);
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+}
+
+.highlight-icon {
+  font-size: var(--font-3xl);
+  flex-shrink: 0;
+}
+
+.highlight-text {
+  font-size: var(--font-lg);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ----------------------------------------------------------------------------
+   Features Block
+   ---------------------------------------------------------------------------- */
+
+.showcase-features-block {
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-3xl);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.features-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-xl);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.feature-number {
+  font-size: var(--font-4xl);
+  font-weight: var(--font-bold);
+  color: var(--accent-tan);
+  opacity: 0.3;
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.feature-card h4 {
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.feature-card p {
+  font-size: var(--font-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Installation Steps - Horizontal Flow
+   ---------------------------------------------------------------------------- */
+
+.showcase-install-block {
+  max-width: 1000px;
+  margin: 0 auto var(--spacing-3xl);
+}
+
+.install-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.install-subtitle {
+  font-size: var(--font-lg);
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.install-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.step-item {
+  flex: 1;
+  text-align: center;
+  padding: var(--spacing-xl);
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-color-light);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.step-item:hover {
+  border-color: var(--primary-green);
+  box-shadow: var(--shadow-sm);
+}
+
+.step-icon {
+  font-size: var(--font-4xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.step-item h4 {
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.step-item p {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.step-arrow {
+  font-size: var(--font-3xl);
+  color: var(--accent-tan);
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Certifications Block
+   ---------------------------------------------------------------------------- */
+
+.showcase-cert-block {
+  background: linear-gradient(
+    135deg,
+    var(--primary-green-light) 0%,
+    var(--primary-green) 100%
+  );
+  padding: var(--spacing-3xl);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.cert-title {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-white);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.cert-badges {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+  flex-wrap: wrap;
+}
+
+.cert-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.cert-check {
+  width: 60px;
+  height: 60px;
+  background-color: var(--text-white);
+  color: var(--primary-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cert-item p {
+  font-size: var(--font-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-white);
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .install-steps {
+    flex-direction: column;
+  }
+
+  .step-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-showcase {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-2xl);
+  }
+
+  .showcase-hero-block {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .hero-title {
+    font-size: var(--font-3xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-lg);
+  }
+
+  .intro-text {
+    font-size: var(--font-base);
+  }
+
+  .showcase-features-block {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .features-title {
+    font-size: var(--font-2xl);
+  }
+
+  .feature-number {
+    font-size: var(--font-3xl);
+  }
+
+  .install-title {
+    font-size: var(--font-2xl);
+  }
+
+  .install-subtitle {
+    font-size: var(--font-base);
+  }
+
+  .showcase-cert-block {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .cert-title {
+    font-size: var(--font-xl);
+  }
+
+  .cert-badges {
+    gap: var(--spacing-lg);
+  }
+
+  .cert-check {
+    width: 50px;
+    height: 50px;
+    font-size: var(--font-2xl);
+  }
+
+  .cert-item p {
+    font-size: var(--font-sm);
+  }
+}

@@ -14,10 +14,8 @@ function Navbar() {
 
   const handleCartClick = () => {
     if (!isAuthenticated) {
-      // Not logged in, redirect to login
       navigate("/login", { state: { from: { pathname: "/cart" } } });
     } else {
-      // Logged in, go to cart
       navigate("/cart");
     }
   };
@@ -37,8 +35,13 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
+        {/* Logo with Image and Text */}
         <Link to="/" className="navbar-brand" onClick={closeMenu}>
+          <img
+            src="/logo_transparent.png"
+            alt="Ryan's Decking Logo"
+            className="brand-logo"
+          />
           <span className="brand-text">Ryan's Decking</span>
         </Link>
 
@@ -46,7 +49,17 @@ function Navbar() {
         <ul className="navbar-nav desktop-nav">
           <li className="nav-item">
             <Link to="/products" className="nav-link">
-              Our Decking
+              Decking
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/fencing" className="nav-link">
+              Fencing
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/garden-tools" className="nav-link">
+              Garden & Tools
             </Link>
           </li>
           <li className="nav-item">
@@ -125,7 +138,21 @@ function Navbar() {
               className="mobile-nav-link"
               onClick={closeMenu}
             >
-              Our Decking
+              Decking
+            </Link>
+          </li>
+          <li className="mobile-nav-item">
+            <Link to="/fencing" className="mobile-nav-link" onClick={closeMenu}>
+              Fencing
+            </Link>
+          </li>
+          <li className="mobile-nav-item">
+            <Link
+              to="/garden-tools"
+              className="mobile-nav-link"
+              onClick={closeMenu}
+            >
+              Garden & Tools
             </Link>
           </li>
           <li className="mobile-nav-item">

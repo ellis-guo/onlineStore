@@ -69,6 +69,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  background-color: var(--bg-tertiary);
 }
 
 .product-name {
@@ -223,7 +224,7 @@
   }
 
   .product-features {
-    padding: var(--spacing-md);
+    display: none;
   }
 
   .feature-text {
