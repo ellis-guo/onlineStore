@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import About from "./pages/About";
 import ProductDetail from "./components/ProductDetail";
 import Profile from "./pages/Profile";
+import CurrencyConverter from "./pages/CurrencyConverter";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/currency" element={<CurrencyConverter />} />
 
           {/* Protected route - requires authentication */}
           <Route

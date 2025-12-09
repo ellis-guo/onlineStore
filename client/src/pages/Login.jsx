@@ -16,9 +16,32 @@ function Login() {
   // Get the redirect path from location state, default to home
   const from = location.state?.from?.pathname || "/";
 
+  // Client-side validation
+  const validateForm = () => {
+    // Check if username is empty
+    if (!username || username.trim() === "") {
+      setError("Username or email is required");
+      return false;
+    }
+
+    // Check if password is empty
+    if (!password || password.trim() === "") {
+      setError("Password is required");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Front-end validation
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true);
 
     try {

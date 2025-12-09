@@ -28,6 +28,10 @@ function Navbar() {
     }
   };
 
+  const handleCurrencyClick = () => {
+    navigate("/currency");
+  };
+
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
@@ -71,6 +75,28 @@ function Navbar() {
 
         {/* Right Side Actions - Desktop */}
         <div className="navbar-actions desktop-actions">
+          {/* Currency Icon */}
+          <button
+            className="icon-btn"
+            onClick={handleCurrencyClick}
+            aria-label="Currency converter"
+            title="Currency converter"
+          >
+            <svg
+              className="icon currency-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+              <path d="M12 18V6" />
+            </svg>
+          </button>
+
           {/* Sign In Icon */}
           <button
             className="icon-btn"
@@ -161,6 +187,28 @@ function Navbar() {
             </Link>
           </li>
           <li className="mobile-nav-divider"></li>
+          <li className="mobile-nav-item">
+            <button
+              className="mobile-nav-link"
+              onClick={() => {
+                handleCurrencyClick();
+                closeMenu();
+              }}
+            >
+              <svg
+                className="mobile-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+                <path d="M12 18V6" />
+              </svg>
+              Currency Converter
+            </button>
+          </li>
           <li className="mobile-nav-item">
             <button
               className="mobile-nav-link"
